@@ -14,8 +14,43 @@ namespace ConsoleApp4
     {
         static void Main(string[] args)
         {
+            List<int> dupInt = new List<int>() { 2, 5, 1, 3, 5, 7, 3, 1, 6, 8, 5 };
+            var filterDup = dupInt.GroupBy(x => x).Where (y => y.Count() > 1).Select(x => x).ToList();
 
+            
+
+
+            //
             List<int> lst = new List<int>() { 1, 2, 3, 4, 5, 6 };
+            List<string> prcList = new List<string>() { "nhu", "tran", "khac", "bao", "bach" };
+
+            var res = prcList.Where(e => e.StartsWith("b")).ToList();
+
+            foreach (var item in res)
+            {
+                Console.WriteLine("chek " + item);
+            }
+
+
+            var lastNum = lst.Last();
+            var lastMq = lst.Where(e => e < 5).Last();
+            var lastMqDiff = lst.Last(e => e < 5);
+
+            var socantim = prcList.ElementAt(2);
+            //var socantimCase1 = lst.Where(e => e > 3).ElementAt(2);
+
+            var socantimdefault = lst.ElementAtOrDefault(20);
+
+            var socantimqr = (from obj in lst where obj > 3 select obj).ElementAtOrDefault(2);
+
+            var firstCantim = lst.FirstOrDefault();
+            var firstqr = (from obj in lst select obj).FirstOrDefault();
+            var firstmq = lst.Where(e => e > 3).FirstOrDefault();
+
+
+            // cai này lạ nè nha
+            var newFirst = lst.FirstOrDefault(e => e > 4);
+
 
             int[] listInt = new int[] { 1, 2, 3, 4 };
 
@@ -57,6 +92,10 @@ namespace ConsoleApp4
                 new Employee() {Id = 4, Name = "kim anh nha"},
                 new Employee() {Id = 5, Name = "tran hau thien" }
             };
+
+            var firstEmpl = employees.FirstOrDefault();
+            var firstEmplqr = (from obj in employees where obj.Name.Length > 15 select obj).FirstOrDefault();
+            var firstNewEmpl = employees.First(x => x.Id > 2 && x.Name.Length > 12  );
 
             IEnumerable<Employee> query = from e in employees where e.Id == 1 select e;
 
@@ -377,6 +416,8 @@ namespace ConsoleApp4
 
             //    }
             //}
+
+            
 
 
         }
