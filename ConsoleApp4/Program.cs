@@ -16,6 +16,8 @@ namespace ConsoleApp4
         static void Main(string[] args)
         {
 
+            // CAC DONG CODE DUOI NAY DUNG DE LUYEN TAP C# , SYNTAX, LINQ VA MOT SO KHAI NIEM NANG CAO TRONG C#
+
             DisplayNhu displayNhu = delegate (string v)
             {
                 Console.WriteLine("in ra v nha = " + v);
