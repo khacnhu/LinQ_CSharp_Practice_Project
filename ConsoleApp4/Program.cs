@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
@@ -26,12 +27,7 @@ namespace ConsoleApp4
 
             var res = prcList.Where(e => e.StartsWith("b")).ToList();
 
-            foreach (var item in res)
-            {
-                Console.WriteLine("chek " + item);
-            }
-
-
+         
             var lastNum = lst.Last();
             var lastMq = lst.Where(e => e < 5).Last();
             var lastMqDiff = lst.Last(e => e < 5);
@@ -327,11 +323,7 @@ namespace ConsoleApp4
 
 
             
-            foreach (var e in leftmethod)
-            {
-
-            }
-
+      
 
             var marks = new List<Marks>()
             {
@@ -404,23 +396,103 @@ namespace ConsoleApp4
             }) ;
 
 
+            MathOpt delOpt;
+
+            MathOperation math = new MathOperation();
+
+            delOpt = math.Add;
+
+            int a = delOpt(2, 3);
+            Excute(delOpt, 2, 5);
+            Excute(math.Subtract, 4, 2);
 
 
-            //foreach (var item in catestd)
-            //{
 
-            //    Console.WriteLine(item.cat.Name + " =>>>>>>>>>> ");
-            //    foreach (var e in item.stud)
-            //    {
-            //        Console.WriteLine(e.Id + "  :  " + e.Name);
+            Console.WriteLine("------------------");
+            Execise exe = new Execise();
 
-            //    }
-            //}
+            //exe.MyFunction();
 
-            
+            Type playerType = typeof(Execise).GetNestedType("Player");
 
+            object playerObj = Activator.CreateInstance(playerType);
+
+            MethodInfo methodInfo =  playerType.GetMethod("MyFunction", BindingFlags.NonPublic | BindingFlags.Instance);
+            methodInfo.Invoke(playerObj, new object[] { 3 });
+
+            Console.WriteLine("TYPE = " + typeof(Player));
+
+
+            ConfigNhuTran configNhuTran = new ConfigNhuTran(LogNhuTran);
+            configNhuTran.Invoke("HELLO WORLD DELEAGATE");
 
         }
+
+        delegate void ConfigNhuTran(string txt);
+
+        static void LogNhuTran(string text)
+        {
+
+            Console.WriteLine("oke " + text);
+        }
+
+        public class Player
+        {
+            static Player () 
+            {
+                i = 54;
+                Console.WriteLine("Player static constructor");
+            }
+
+            public static int i;
+
+            public Player ()
+            {
+                Console.WriteLine("check constructor");
+            }
+        }
+
+        public class Execise
+        {
+            public class Player
+            {
+                private void MyFunction(int i)
+                {
+                    Console.WriteLine("Check i = " + i);
+                }
+            }
+
+            private class Hero
+            {
+
+            }
+
+            public void MyFunction()
+            {
+                Console.WriteLine("MyFunction");
+            }
+        }
+
+        public delegate int MathOpt(int a, int b);
+
+        class MathOperation
+        {
+            public int Add(int a, int b)
+            {
+                return a + b;
+            }
+
+            public int Subtract(int a, int b)
+            {
+                return a - b;
+            }
+        }
+
+        static void Excute(MathOpt math, int a, int b)
+        {
+            Console.WriteLine("nhu tran custoom func " + math(a, b));
+        }
+
 
         class Std()
         {
