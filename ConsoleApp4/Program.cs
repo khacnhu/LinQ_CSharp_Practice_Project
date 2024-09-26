@@ -15,14 +15,18 @@ namespace ConsoleApp4
     {
         static void Main(string[] args)
         {
+
+            DisplayNhu displayNhu = delegate (string v)
+            {
+                Console.WriteLine("in ra v nha = " + v);
+            };
+
+            displayNhu("v la vui ve nha");
+
             List<int> dupInt = new List<int>() { 2, 5, 1, 3, 5, 7, 3, 1, 6, 8, 5 };
             var filterDup = dupInt.GroupBy(x => x).Where (y => y.Count() > 1).Select(x => x).ToList();
 
-            
-
-
-            //
-            List<int> lst = new List<int>() { 1, 2, 3, 4, 5, 6 };
+                        List<int> lst = new List<int>() { 1, 2, 3, 4, 5, 6 };
             List<string> prcList = new List<string>() { "nhu", "tran", "khac", "bao", "bach" };
 
             var res = prcList.Where(e => e.StartsWith("b")).ToList();
@@ -33,7 +37,6 @@ namespace ConsoleApp4
             var lastMqDiff = lst.Last(e => e < 5);
 
             var socantim = prcList.ElementAt(2);
-            //var socantimCase1 = lst.Where(e => e > 3).ElementAt(2);
 
             var socantimdefault = lst.ElementAtOrDefault(20);
 
@@ -44,7 +47,6 @@ namespace ConsoleApp4
             var firstmq = lst.Where(e => e > 3).FirstOrDefault();
 
 
-            // cai này lạ nè nha
             var newFirst = lst.FirstOrDefault(e => e > 4);
 
 
@@ -403,12 +405,12 @@ namespace ConsoleApp4
             delOpt = math.Add;
 
             int a = delOpt(2, 3);
-            Excute(delOpt, 2, 5);
-            Excute(math.Subtract, 4, 2);
+            //Excute(delOpt, 2, 5);
+            //Excute(math.Subtract, 4, 2);
 
 
 
-            Console.WriteLine("------------------");
+            //Console.WriteLine("------------------");
             Execise exe = new Execise();
 
             //exe.MyFunction();
@@ -418,22 +420,53 @@ namespace ConsoleApp4
             object playerObj = Activator.CreateInstance(playerType);
 
             MethodInfo methodInfo =  playerType.GetMethod("MyFunction", BindingFlags.NonPublic | BindingFlags.Instance);
-            methodInfo.Invoke(playerObj, new object[] { 3 });
+            //methodInfo.Invoke(playerObj, new object[] { 3 });
 
-            Console.WriteLine("TYPE = " + typeof(Player));
+            //Console.WriteLine("TYPE = " + typeof(Player));
 
 
             ConfigNhuTran configNhuTran = new ConfigNhuTran(LogNhuTran);
-            configNhuTran.Invoke("HELLO WORLD DELEAGATE");
+            //Console.Write("TYPE TEXT : ");
+            string txt = Console.ReadLine();
+            //configNhuTran.Invoke(txt, 23);
+
+            PracticeDele practice = new PracticeDele(Sumone);
+            practice.Invoke(2, 3);
+            //practice
+            PracticeDele practiceDele;
+
+
+
+
+            Console.ReadKey();
+
+
 
         }
 
-        delegate void ConfigNhuTran(string txt);
+        public delegate void DisplayNhu(string str);
 
-        static void LogNhuTran(string text)
+        delegate void PracticeDele(int ageone, int agetwo);
+
+        static void Sumone(int aone, int atwo)
+        {
+            int res = atwo + aone;
+            Console.WriteLine("check a sum " + res);
+        } 
+
+        static void SubtractDele (int lon, int nho)
+        {
+            int res = lon - nho;
+            Console.WriteLine("check subtract = " + res);
+        }
+
+
+        delegate void ConfigNhuTran(string txt, int age);
+
+        static void LogNhuTran(string text, int age)
         {
 
-            Console.WriteLine("oke " + text);
+            Console.WriteLine("oke " + text + " age = " + age);
         }
 
         public class Player
